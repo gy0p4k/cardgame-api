@@ -1,10 +1,13 @@
 const express = require('express');
+const game = require('./src/game');
+const paramCheck = require('./paramCheck');
 const app = express();
 
-app.get('/', (req, res) => {
-  const message = 'hello';
+
+app.get('/game/:size', paramCheck, (req, res) => {
   res.json({
-    message,
+    pictures: game.getPictures(req.params.size),
+    token: game.getToken(),
   });
 });
 
