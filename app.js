@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { newGame, getPosition, highScores } = require('./src/game');
-const newGameParamCheck = require('./newGameParamCheck');
-const scoreParamCheck = require('./scoreParamCheck');
+const newGameParamCheck = require('./middlewares/newGameParamCheck');
+const scoreParamCheck = require('./middlewares/scoreParamCheck');
 const app = express();
 
 app.use(bodyParser.json());

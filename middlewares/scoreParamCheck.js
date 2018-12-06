@@ -1,4 +1,4 @@
-const { isStarted } = require('./src/game');
+const { isStarted } = require('../src/game');
 const requiredParams = [
   'steps',
   'seconds',
