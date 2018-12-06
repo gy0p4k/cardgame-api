@@ -27,7 +27,10 @@ game.newGame = size => {
   return game;
 };
 
-game.highScores = () => getOrderedScores();
+game.highScores = () => (
+  getOrderedScores()
+    .map(score => Object.assign({}, score, { token: undefined }))
+);
 
 game.getPosition = newScore => {
   saveScore(newScore);

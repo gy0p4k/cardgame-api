@@ -13,10 +13,9 @@ const randomCard = () => [...Array(mockCardLength)].map(i=>chars[Math.random()*c
 
 const isBetterResult = (a, b) => {
   if(a.steps === b.steps) {
-    console.log(a.seconds, b.seconds)
     return a.seconds > b.seconds;
   } else {
-    return a.steps > b.steps
+    return a.steps > b.steps;
   }
 }
 
@@ -46,9 +45,12 @@ dbLayer.getOrderedScores = () => (
   db.get('scores')
     .value()
     .sort((a, b) => isBetterResult(a, b) ? 1 : -1)
-    .map(score => Object.assign({}, score, { token: undefined }))
 );
 
-dbLayer.calculatePosition = token => ({
-  position: 0,
-});
+dbLayer.calculatePosition = token => {
+  const payload = { position: -1 };
+  dbLayer.getOrderedScores().forEach((score, i) => {
+    if(token === score.token) payload.position = i;
+  })
+  return payload;
+};
