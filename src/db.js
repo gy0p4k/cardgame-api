@@ -6,7 +6,7 @@ const chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 
-db.defaults({ games: [] })
+db.defaults({ games: [], scores: [] })
   .write()
 
 const randomCard = () => [...Array(mockCardLength)].map(i=>chars[Math.random()*chars.length|0]).join``;
@@ -19,4 +19,10 @@ dbLayer.saveGame = game => (
   db.get('games')
     .push(game)
     .write()
+);
+
+dbLayer.getGameByToken = token => (
+  db.get('games')
+    .find({ token })
+    .value()
 );

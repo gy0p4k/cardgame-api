@@ -1,12 +1,12 @@
 const uuid = require('uuid/v1');
 
 const utils = require('./utils');
-const { deck, saveGame } = require('./db');
-
-const game = module.exports = {};
+const { deck, saveGame, getGameByToken } = require('./db');
 
 const getToken = () => uuid();
 const getPictures = count => deck.slice(0, count);
+
+const game = module.exports = {};
 
 game.newGame = size => {
   const game = {
@@ -18,3 +18,4 @@ game.newGame = size => {
 };
 
 game.isValidSize = size => size && utils.isPositiveInteger(size);
+game.isStarted = token => getGameByToken(token);
