@@ -19,13 +19,15 @@ test('GET / game with wrong params', (t) => {
 
 test('GET / game with correct param', (t) => {
   const expectedResponse = 200;
+  const expectedPictureLength = 5;
   request(app)
-    .get('/game/4')
+    .get(`/game/${expectedPictureLength}`)
     .end((err, res) => {
       const { pictures, token } = res.body;
-      console.log(res.body);
+      console.log(res.body)
       t.equal(res.status, expectedResponse, `response code is ${expectedResponse}`);
       t.ok(Array.isArray(pictures), 'pictures should be array');
+      t.equal(pictures.length, expectedPictureLength, 'picture arr size should be expected');
       t.ok(typeof token === 'string' || token instanceof String, 'token should be string');
       t.end();
     });
