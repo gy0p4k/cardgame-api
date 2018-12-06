@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { newGame } = require('./src/game');
+const { newGame, getPosition, highScores } = require('./src/game');
 const newGameParamCheck = require('./newGameParamCheck');
 const scoreParamCheck = require('./scoreParamCheck');
 const app = express();
@@ -12,9 +12,11 @@ app.get('/game/:size', newGameParamCheck, (req, res) => {
 });
 
 app.post('/score', scoreParamCheck, (req, res) => {
-  res.json({
-    position: 0,
-  });
+  res.json({ ...getPosition(req.body) });
 })
+
+app.get('/score', (req, res) => {
+    res.json([ ...highScores() ]);
+  })
 
 module.exports = app;
